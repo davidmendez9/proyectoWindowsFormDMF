@@ -1,0 +1,16 @@
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\bin\Debug\net6.0-windows\proyectoFormDMF.exe
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\bin\Debug\net6.0-windows\proyectoFormDMF.deps.json
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\bin\Debug\net6.0-windows\proyectoFormDMF.runtimeconfig.json
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\bin\Debug\net6.0-windows\proyectoFormDMF.dll
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\bin\Debug\net6.0-windows\proyectoFormDMF.pdb
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\obj\Debug\net6.0-windows\proyectoFormDMF.csproj.GenerateResource.cache
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\obj\Debug\net6.0-windows\proyectoFormDMF.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\obj\Debug\net6.0-windows\proyectoFormDMF.AssemblyInfoInputs.cache
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\obj\Debug\net6.0-windows\proyectoFormDMF.AssemblyInfo.cs
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\obj\Debug\net6.0-windows\proyectoFormDMF.csproj.CoreCompileInputs.cache
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\obj\Debug\net6.0-windows\proyectoFormDMF.dll
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\obj\Debug\net6.0-windows\refint\proyectoFormDMF.dll
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\obj\Debug\net6.0-windows\proyectoFormDMF.pdb
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\obj\Debug\net6.0-windows\proyectoFormDMF.genruntimeconfig.cache
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\obj\Debug\net6.0-windows\ref\proyectoFormDMF.dll
+C:\Users\David\source\repos\proyectoFormDMF\proyectoFormDMF\obj\Debug\net6.0-windows\proyectoFormDMF.FormCoches.resources
