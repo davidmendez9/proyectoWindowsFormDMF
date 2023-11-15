@@ -19,7 +19,7 @@ namespace proyectoFormDMF
         public Image fotoCoche { get; set; } //Imagen del coche
         public string nombreFoto { get; set; }
 
-        public Coche(string matricula, string marca, bool particular, float precio, int aniosEdad, Image fotoCoche)
+        public Coche(string matricula, string marca, bool particular, float precio, int aniosEdad, Image fotoCoche, string nombreFoto)
         {
             contador++;
             this.numero = contador;
@@ -30,6 +30,7 @@ namespace proyectoFormDMF
             this.precio = precio;
             this.aniosEdad = aniosEdad;
             this.fotoCoche = fotoCoche;
+            this.nombreFoto = nombreFoto;
         }
         
        

@@ -9,10 +9,10 @@ namespace proyectoFormDMF
         public FormCoches()
         {
             InitializeComponent();
-            aniadirElemento("1234DMF", "Nissan", true, (float)2500.99, 20, Image.FromFile("nissan.jpg"));
-            aniadirElemento("4567PPS", "Volvo", false, (float)4750.50, 15, Image.FromFile("volvo.jpg"));
-            aniadirElemento("5643DVZ", "Volskwagen", true, (float)4000.52, 17, Image.FromFile("Volsk.jpg"));
-            aniadirElemento("2472AND", "Ferrari", false, (float)200000, 4, Image.FromFile("Ferrari.jpg"));
+            aniadirElemento("1234DMF", "Nissan", true, (float)2500.99, 20, "nissan.jpg");
+            aniadirElemento("4567PPS", "Volvo", false, (float)4750.50, 15, "volvo.jpg");
+            aniadirElemento("5643DVZ", "Volskwagen", true, (float)4000.52, 17, "Volsk.jpg");
+            aniadirElemento("2472AND", "Ferrari", false, (float)200000, 4, "Ferrari.jpg");
             mostrarElementos(actual);
             btnAnterior.Enabled = false;
             lblNombreFoto.Visible = false;
@@ -31,24 +31,48 @@ namespace proyectoFormDMF
             txtPrimeraLetra.Text = "" + lista[contador].primeraLetraMatricula;
             txtParticular.Text = "" + lista[contador].particular;
             pbFotoCoche.Image = lista[contador].fotoCoche;
+            txtNombreFoto.Text = "" + lista[contador].nombreFoto;
         }
 
-        public void aniadirElemento(string matricula, string marca, Boolean particular, float precio, int anios, Image fotoCoche)
-        {
-            lista.Add(new Coche(matricula, marca, particular, precio, anios, fotoCoche));
-            contador++;
-        }
-        public void aniadirElementoSinFoto(string matricula, string marca, Boolean particular, float precio, int anios, String nombreFoto)
+        //public void aniadirElemento(string matricula, string marca, Boolean particular, float precio, int anios, Image fotoCoche)
+        //{
+        //    lista.Add(new Coche(matricula, marca, particular, precio, anios, fotoCoche));
+        //    contador++;
+        //}
+        public void aniadirElemento(string matricula, string marca, Boolean particular, float precio, int anios, String nombreFoto)
         {
             Image fotoCoche = Image.FromFile(nombreFoto);
-            lista.Add(new Coche(matricula, marca, particular, precio, anios, fotoCoche));
+            lista.Add(new Coche(matricula, marca, particular, precio, anios, fotoCoche, nombreFoto));
             contador++;
+        }
+        private Boolean isLast()
+        { 
+            if (actual == lista.Count - 1) 
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private Boolean isFirst()
+        {
+            if (actual == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         private void avanzar()
         {
             actual++;
             btnAnterior.Enabled = true;
-            if (actual == lista.Count - 1)
+            if (isLast())
             {
                 btnSiguiente.Enabled = false;
             }
@@ -58,7 +82,7 @@ namespace proyectoFormDMF
         {
             actual--;
             btnSiguiente.Enabled = true;
-            if (actual == 0)
+            if (isFirst())
             {
                 btnAnterior.Enabled = false;
             }
@@ -118,14 +142,13 @@ namespace proyectoFormDMF
             txtNombreFoto.Visible = true;
             txtNumero.Enabled = false;
             txtPrimeraLetra.Enabled = false;
-            txtNombreFoto.Clear();
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             if (!modifyMode)
             {
-                aniadirElementoSinFoto(txtMatricula.Text, txtMarca.Text, Boolean.Parse(txtParticular.Text), float.Parse(txtPrecio.Text), int.Parse(txtAniosEdad.Text), txtNombreFoto.Text);
+                aniadirElemento(txtMatricula.Text, txtMarca.Text, Boolean.Parse(txtParticular.Text), float.Parse(txtPrecio.Text), int.Parse(txtAniosEdad.Text), txtNombreFoto.Text);
             }
             else
             {
@@ -140,8 +163,22 @@ namespace proyectoFormDMF
             mostrarElementos(actual);
             btnAceptar.Enabled = false;
             btnCancelar.Enabled = false;
-            btnSiguiente.Enabled = true;
-            btnAnterior.Enabled = true;
+            if (isFirst())
+            {
+                btnAnterior.Enabled = false;
+            }
+            else
+            {
+                btnAnterior.Enabled = true;
+            }
+            if (isLast())
+            {
+                btnSiguiente.Enabled = false;
+            }
+            else
+            {
+                btnSiguiente.Enabled = true;
+            }
             btnAniadir.Enabled = true;
             btnModificar.Enabled = true;
             btnBorrar.Enabled = true;
@@ -149,7 +186,8 @@ namespace proyectoFormDMF
             txtNombreFoto.Visible = false;
             txtNumero.Enabled = true;
             txtPrimeraLetra.Enabled = true;
-            
+            modifyMode = false;
+
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -157,8 +195,24 @@ namespace proyectoFormDMF
             mostrarElementos(actual);
             btnAceptar.Enabled = false;
             btnCancelar.Enabled = false;
-            btnSiguiente.Enabled = true;
-            btnAnterior.Enabled = true;
+            if (isFirst())
+            {
+                btnAnterior.Enabled = false;
+            }
+            else
+            {
+                btnAnterior.Enabled = true;
+            }
+
+            if (isLast())
+            {
+                btnSiguiente.Enabled = false;
+            }
+            else
+            {
+                btnSiguiente.Enabled = true;
+            }
+
             btnAniadir.Enabled = true;
             btnModificar.Enabled = true;
             btnBorrar.Enabled = true;
@@ -166,7 +220,7 @@ namespace proyectoFormDMF
             txtNombreFoto.Visible = false;
             txtNumero.Enabled = true;
             txtPrimeraLetra.Enabled = true;
-            txtNombreFoto.Clear();
+            modifyMode = false;
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
