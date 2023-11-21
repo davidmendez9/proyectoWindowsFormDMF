@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace proyectoFormDMF
 {
+   
     internal class Coche
     {
-        public static int contador { get; set; } = 0;
-        public int numero { get; set; }
         public string matricula { get; set; }
         public char primeraLetraMatricula { get; set; } //Contiene la primera letra de la matricula
         public string marca { get; set; }
@@ -21,8 +21,6 @@ namespace proyectoFormDMF
 
         public Coche(string matricula, string marca, bool particular, float precio, int aniosEdad, Image fotoCoche, string nombreFoto)
         {
-            contador++;
-            this.numero = contador;
             this.matricula = matricula;
             this.primeraLetraMatricula = matricula[4]; 
             this.marca = marca;

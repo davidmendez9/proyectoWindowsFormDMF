@@ -47,8 +47,6 @@
             btnModificar = new Button();
             btnAniadir = new Button();
             btnBorrar = new Button();
-            lblNumero = new Label();
-            txtNumero = new TextBox();
             lblNombreFoto = new Label();
             txtNombreFoto = new TextBox();
             btnAceptar = new Button();
@@ -218,22 +216,7 @@
             btnBorrar.TabIndex = 18;
             btnBorrar.Text = "Borrar";
             btnBorrar.UseVisualStyleBackColor = true;
-            // 
-            // lblNumero
-            // 
-            lblNumero.AutoSize = true;
-            lblNumero.Location = new Point(61, 112);
-            lblNumero.Name = "lblNumero";
-            lblNumero.Size = new Size(66, 20);
-            lblNumero.TabIndex = 19;
-            lblNumero.Text = "Número:";
-            // 
-            // txtNumero
-            // 
-            txtNumero.Location = new Point(189, 109);
-            txtNumero.Name = "txtNumero";
-            txtNumero.Size = new Size(37, 27);
-            txtNumero.TabIndex = 20;
+            btnBorrar.Click += btnBorrar_Click;
             // 
             // lblNombreFoto
             // 
@@ -280,8 +263,6 @@
             Controls.Add(btnAceptar);
             Controls.Add(txtNombreFoto);
             Controls.Add(lblNombreFoto);
-            Controls.Add(txtNumero);
-            Controls.Add(lblNumero);
             Controls.Add(btnBorrar);
             Controls.Add(btnAniadir);
             Controls.Add(btnModificar);
@@ -329,8 +310,6 @@
         private Button btnModificar;
         private Button btnAniadir;
         private Button btnBorrar;
-        private Label lblNumero;
-        private TextBox txtNumero;
         private Label lblNombreFoto;
         private TextBox txtNombreFoto;
         private Button btnAceptar;
