@@ -7,35 +7,48 @@ namespace proyectoFormDMF
     {
         private static List<Coche> lista = new List<Coche>(); //Lista principal
 
-        static int contador = 0;
-        static int actual = 0;
-        Boolean modifyMode = false;
+        static int contador = 0; //Variable para almacenar el numero de coches.
+        static int actual = 0; //Variable que contiene la posicion del elemento actual.
+        Boolean modifyMode = false; //Variable para comprobar si estamos en modificar o en añadir.
         public FormCoches()
         {
             InitializeComponent();
+
+            /*
+             * Tengo estos add comentados porque los he usado para crear el fichero. 
+             * Como el fichero ya está creado, no son necesarios ya que iniciamos el programa
+             * mediante los datos del fichero.
+             */
+
             //aniadirElemento("1234DMF", "Nissan", true, (float)2500.99, 20, "nissan.jpg");
             //aniadirElemento("4567PPS", "Volvo", false, (float)4750.50, 15, "volvo.jpg");
             //aniadirElemento("5643DVZ", "Volskwagen", true, (float)4000.52, 17, "Volsk.jpg");
             //aniadirElemento("2472AND", "Ferrari", false, (float)200000, 4, "Ferrari.jpg");
             //escribirArchivo();
+
             leerArchivo();
             mostrarElementos(actual);
             btnAnterior.Enabled = false;
             lblNombreFoto.Visible = false;
             txtNombreFoto.Visible = false;
 
+            //Evento para cuando se cierre el formulario
             this.FormClosing += FormCoches_FormClosing;
         }
-
+        //Cuando cerremos el formulario se ejecuta este método en el que guardamos en el fichero los datos de la lista.
         private void FormCoches_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Llama a escribirArchivo al cerrar el formulario
             escribirArchivo();
         }
+
+        //Método en el que mostramos el elemento en la posicion deseada. 
         public void mostrarElementos(int actual)
         {
+            //Comprobamos si el numero introducido no supera el tamaño de la lista o
+            //si en la lista hay elementos.
             if (lista.Count > 0 && actual >= 0 && actual < lista.Count)
             {
+                //Intoducimos los valores en sus respectivos campos.
                 txtMatricula.Text = "" + lista[actual].matricula;
                 txtMarca.Text = "" + lista[actual].marca;
                 txtAniosEdad.Text = "" + lista[actual].aniosEdad;
@@ -47,13 +60,15 @@ namespace proyectoFormDMF
             }
             else
             {
-                Console.WriteLine("No hay elementos");
+                //Mostramos mensaje de error
+                MessageBox.Show("Error");
             }
         }
 
+        //Método para leer los datos del fichero
         public void leerArchivo()
         {
-            string nombreArchivo = "databank.data";
+            string nombreArchivo = "databank.data"; //Nombre del fichero con los datos
 
             try
             {
@@ -62,18 +77,17 @@ namespace proyectoFormDMF
                     // Limpia la lista antes de leer nuevos datos
                     lista.Clear();
 
-                    using (StreamReader reader = new StreamReader(nombreArchivo))
+                    using (StreamReader reader = new StreamReader(nombreArchivo))//Abrimos archivo
                     {
-                        while (!reader.EndOfStream)
+                        while (!reader.EndOfStream)//Recorremos hasta el final del fichero
                         {
-                            string line = reader.ReadLine();
-                            string[] datos = line.Split('-');
-
-                            MessageBox.Show("Linea leida: " + datos[1] +contador);
+                            string line = reader.ReadLine(); //Guardamos una linea
+                            string[] datos = line.Split('-'); //Dividimos la linea a partir de '-' y guardamos cada parte en una posicion del vector
                             
-                            // Asegúrate de que hay suficientes elementos en el array antes de intentar acceder a ellos
+                            // Comprobamos que tenemos los datos requeridos para crear un nuevo registro de coche
                             if (datos.Length == 6)
                             {
+                                //Guardamos los datos en cada variable
                                 string matricula = datos[0];
                                 string marca = datos[1];
                                 bool particular = bool.Parse(datos[2]);
@@ -81,7 +95,7 @@ namespace proyectoFormDMF
                                 int anios = int.Parse(datos[4]);
                                 string nombreFoto = datos[5];
 
-                                
+                                //Añadimos los datos recogidos a la lista
                                 aniadirElemento(matricula, marca, particular, precio, anios, nombreFoto);
                             }
                         }
@@ -94,10 +108,9 @@ namespace proyectoFormDMF
                     mostrarElementos(actual);
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) //Si hay algun problema de lectura con el archivo, indicamos por pantalla el fallo.
             {
-                // Manejo de excepciones (puedes mostrar un mensaje de error, registrar el error, etc.)
-                MessageBox.Show("Error al leer el archivo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al leer el archivo");
             }
         }
         public void escribirArchivo()
@@ -109,28 +122,29 @@ namespace proyectoFormDMF
             {
                 using (StreamWriter writer = new StreamWriter(nombreArchivo))
                 {
-                    foreach (Coche coche in lista)
+                    foreach (Coche coche in lista) //Recorremos por elementos la lista.
                     {
-                        // Formato de cada línea: matricula,marca,particular,precio,anios,nombreFoto
+                        //Lo escribimos todo siguiendo el formato siguiente:
+                        // Formato de cada línea: matricula-marca-particular-precio-anios-nombreFoto
                         string linea = $"{coche.matricula}-{coche.marca}-{coche.particular}-{coche.precio}-{coche.aniosEdad}-{coche.nombreFoto}";
                         writer.WriteLine(linea);
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex)//Mostramos un error, en el caso de que lo haya, al intentar escribir en el fichero.
             {
-                // Manejo de excepciones (puedes mostrar un mensaje de error, registrar el error, etc.)
-                MessageBox.Show("Error al escribir en el archivo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al escribir en el archivo");
             }
         }
 
+        //Método para añadir nuevos Coches a la lista, sin tener que pasar la imagen
         public void aniadirElemento(string matricula, string marca, Boolean particular, float precio, int anios, String nombreFoto)
         {
             Image fotoCoche = Image.FromFile(nombreFoto);
             lista.Add(new Coche(matricula, marca, particular, precio, anios, fotoCoche, nombreFoto));
             contador++;
         }
-        private Boolean isLast()
+        private Boolean isLast() //Método para comprobar si nos encontramos en el último elemento de la lista.
         {
             if (actual == lista.Count - 1)
             {
@@ -142,7 +156,7 @@ namespace proyectoFormDMF
             }
         }
 
-        private Boolean isFirst()
+        private Boolean isFirst() //Método para comprobar si nos encontramos en el primer elemento de la lista.
         {
             if (actual == 0)
             {
@@ -153,11 +167,13 @@ namespace proyectoFormDMF
                 return false;
             }
         }
-        private void avanzar()
+        private void avanzar() //Método para avanzar al siguiente elemento
         {
-            if (actual < lista.Count - 1)
+            if (actual < lista.Count - 1) //Importante comprobar que actual no sea mayor que el tamaño de la lista
             {
-                actual++;
+                actual++; //Sumando 1 a actual, avanzamos al siguiente indice
+                
+                //Comprobaciones de botones
                 btnAnterior.Enabled = true;
                 if (isLast())
                 {
@@ -166,11 +182,13 @@ namespace proyectoFormDMF
                 mostrarElementos(actual);
             }
         }
-        private void retroceder()
+        private void retroceder() //Método para retroceder al anterior elemento
         {
-            if (actual > 0)
+            if (actual > 0) //Comprobamos que actual sea un número válido para el índice de la lista
             {
-                actual--;
+                actual--; //Restando 1 a actual, volvemos al anterior indice
+
+                //Comprobaciones de botones
                 btnSiguiente.Enabled = true;
                 if (isFirst())
                 {
@@ -179,7 +197,7 @@ namespace proyectoFormDMF
                 mostrarElementos(actual);
             }
         }
-        public void modificar()
+        public void modificar() //Método para modificar el estado de los botones cuando vayamos a modificar un elemento
         {
             btnAceptar.Enabled = true;
             btnCancelar.Enabled = true;
@@ -192,7 +210,7 @@ namespace proyectoFormDMF
             txtNombreFoto.Visible = true;
             txtPrimeraLetra.Enabled = false;
         }
-        public void vaciarDatos()
+        public void vaciarDatos() //Vaciamos todos los campos con este método
         {
             txtMatricula.Clear();
             txtMarca.Clear();
@@ -205,17 +223,17 @@ namespace proyectoFormDMF
 
         }
 
-        public void borrarElemento()
+        public void borrarElemento() //Método para borrar un elemento
         {
-            if (contador > 1)
+            if (contador > 1) //Comprobamos que haya algún elemento en la lista
             {
                 lista.RemoveAt(actual);
-                actual = 0;
+                actual = 0; //Siempre volvemos a mostrar el elemento inicial para evitar fallos
                 contador--;
                 mostrarElementos(actual);
                 btnAnterior.Enabled = false;
             }
-            else if (contador == 1)
+            else if (contador == 1) //Si queda uno, lo bottamos y dejamos los campos deshabilitados y vacíos. Sólo se podría añadir
             {
                 lista.RemoveAt(actual);
                 actual = 0;
@@ -240,6 +258,8 @@ namespace proyectoFormDMF
             }
 
         }
+        //Eventos de los botones empleando los métodos anteriores
+
         private void btnSiguiente_Click(object sender, EventArgs e)
         {
             avanzar();
@@ -277,7 +297,7 @@ namespace proyectoFormDMF
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (!modifyMode)
+            if (!modifyMode) //Comprobamos que no estemos modificando
             {
                 if (txtNombreFoto.Text == "")
                 {
@@ -289,7 +309,7 @@ namespace proyectoFormDMF
                 }
 
             }
-            else
+            else //Si estamos modificando, sobreescribimos los valores del elemento por los nuevos
             {
                 lista[actual].matricula = txtMatricula.Text;
                 lista[actual].particular = Boolean.Parse(txtParticular.Text);
@@ -309,6 +329,9 @@ namespace proyectoFormDMF
             mostrarElementos(actual);
             btnAceptar.Enabled = false;
             btnCancelar.Enabled = false;
+
+            //Comprobaciones de los botones
+
             if (isFirst())
             {
                 btnAnterior.Enabled = false;
@@ -369,7 +392,7 @@ namespace proyectoFormDMF
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            modifyMode = true;
+            modifyMode = true; //Activamos el boolean para indicar que vamos a modificar
             modificar();
         }
 

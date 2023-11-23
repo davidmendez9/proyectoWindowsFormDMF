@@ -19,10 +19,11 @@ namespace proyectoFormDMF
         public Image fotoCoche { get; set; } //Imagen del coche
         public string nombreFoto { get; set; }
 
+        //Constructor de la clase Coche
         public Coche(string matricula, string marca, bool particular, float precio, int aniosEdad, Image fotoCoche, string nombreFoto)
         {
             this.matricula = matricula;
-            this.primeraLetraMatricula = matricula[4]; 
+            this.primeraLetraMatricula = matricula[4];
             this.marca = marca;
             this.particular = particular;
             this.precio = precio;
